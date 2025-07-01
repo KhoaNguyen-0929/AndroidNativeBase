@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     kotlin("kapt")
 }
@@ -25,6 +26,29 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    flavorDimensions += "env"
+
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+        }
+
+        create("staging") {
+            dimension = "env"
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+        }
+
+        create("prod") {
+            dimension = "env"
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,6 +63,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.room.runtime.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -52,6 +77,8 @@ dependencies {
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
+
+    ksp(libs.room.compiler)
 
     implementation(project(":domain"))
     implementation(project(":core:common"))

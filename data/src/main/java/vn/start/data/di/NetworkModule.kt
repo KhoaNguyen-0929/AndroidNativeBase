@@ -11,15 +11,10 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import vn.start.data.BuildConfig
 import vn.start.data.remote.APIServices
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
 
 
 @Module
@@ -27,12 +22,10 @@ import javax.net.ssl.X509TrustManager
 object NetworkModule {
     @Singleton
     @Provides
-    fun provideGsonConvertFactory(): GsonConverterFactory {
-        val gson = GsonBuilder()
-            .setLenient()
+    fun provideGsonConvertFactory(): GsonConverterFactory = GsonConverterFactory.create(
+        GsonBuilder()
             .create()
-        return GsonConverterFactory.create(gson)
-    }
+    )
 
 //    NOTE: Use in case you want to trust all cer.
 //    @Singleton

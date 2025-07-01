@@ -40,19 +40,16 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
         }
 
         create("staging") {
             dimension = "env"
             applicationIdSuffix = ".stg"
             versionNameSuffix = "-stg"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
         }
 
         create("prod") {
             dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
         }
     }
 
@@ -65,7 +62,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 }
 

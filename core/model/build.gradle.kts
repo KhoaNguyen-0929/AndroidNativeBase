@@ -14,4 +14,5 @@ kotlin {
 
 dependencies{
     implementation(libs.gson)
+    implementation(libs.room.runtime)
 }

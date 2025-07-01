@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import vn.start.data.local.database.AppDatabase
 import javax.inject.Singleton
+import androidx.room.Room
 
 @Module
 @InstallIn(SingletonComponent::class)

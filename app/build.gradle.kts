@@ -57,6 +57,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.0.0"
+    }
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -75,6 +78,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.compose.material3.adaptive.navigation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -88,6 +94,10 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":features:focus"))
+    implementation(project(":features:planning"))
+    implementation(project(":features:dashboard"))
     implementation(project(":core:model"))
     implementation(project(":core:common"))
+    implementation(project(":core:designsystem"))
 }

@@ -1,6 +1,5 @@
 package vn.start.planning.navigation
 
-import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -8,40 +7,28 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import vn.start.planning.ui.PlanningScreen
 
-@SuppressLint("MissingSerializableAnnotation")
-data object PlanningRoute // route to Planning screen
 
-@SuppressLint("MissingSerializableAnnotation")
-data object PlanningBaseRoute // route to base navigation graph
+data object PlanningRoute {
+    const val route = "planning_route"
+}
 
-fun NavController.navigateToPlanning(navOptions: NavOptions) = navigate(route = PlanningRoute, navOptions)
+data object PlanningBaseRoute {
+    const val route = "planning_base_route"
+}
 
-/**
- *  The Planning section of the app. It can also display information about topics.
- *  This should be supplied from a separate module.
- *
- *  @param onTopicClick - Called when a topic is clicked, contains the ID of the topic
- *  @param topicDestination - Destination for topic content
- */
+fun NavController.navigateToPlanning(navOptions: NavOptions? = null) {
+    navigate(PlanningRoute.route, navOptions)
+}
+
 fun NavGraphBuilder.planningSection(
     onTopicClick: (String) -> Unit,
     topicDestination: NavGraphBuilder.() -> Unit,
 ) {
-    navigation<PlanningBaseRoute>(startDestination = PlanningRoute) {
-        composable<PlanningRoute>(
-//            deepLinks = listOf(
-//                navDeepLink {
-//                    /**
-//                     * This destination has a deep link that enables a specific news resource to be
-//                     * opened from a notification (@see SystemTrayNotifier for more). The news resource
-//                     * ID is sent in the URI rather than being modelled in the route type because it's
-//                     * transient data (stored in SavedStateHandle) that is cleared after the user has
-//                     * opened the news resource.
-//                     */
-////                    uriPattern = DEEP_LINK_URI_PATTERN
-//                },
-//            ),
-        ) {
+    navigation(
+        startDestination = PlanningRoute.route,
+        route = PlanningBaseRoute.route
+    ) {
+        composable(PlanningRoute.route) {
             PlanningScreen()
         }
         topicDestination()

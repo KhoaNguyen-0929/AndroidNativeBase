@@ -14,6 +14,9 @@ interface TaskDao {
     @Query("SELECT * FROM tasks ORDER BY priority DESC, createdAt ASC")
     fun getTasks(): Flow<List<Task>>
 
+    @Query("SELECT * FROM tasks WHERE id = :id LIMIT 1")
+    suspend fun getTaskById(id: Int): Task?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task)
 

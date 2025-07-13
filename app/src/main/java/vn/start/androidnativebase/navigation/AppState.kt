@@ -1,5 +1,6 @@
 package vn.start.androidnativebase.navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -7,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -50,9 +50,12 @@ class AppState(
         }
 
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() {
+        @SuppressLint("RestrictedApi") @Composable get() {
             return TopLevelDestination.entries.firstOrNull { topLevelDestination ->
-                currentDestination?.hasRoute(topLevelDestination.route) == true
+                currentDestination?.hasRoute(
+                    topLevelDestination.route.toString(),
+                    arguments = null
+                ) == true
             }
         }
 
@@ -68,7 +71,7 @@ class AppState(
         }
 
         when (topLevelDestination) {
-            TopLevelDestination.FOCUS -> navController.navigateToFocus( topLevelNavOptions)
+            TopLevelDestination.FOCUS -> navController.navigateToFocus(topLevelNavOptions)
             TopLevelDestination.PLANNING -> navController.navigateToPlanning(topLevelNavOptions)
             TopLevelDestination.DASHBOARD -> navController.navigateToDashBoard(topLevelNavOptions)
         }

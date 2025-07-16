@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import vn.start.dashboard.ui.DashBoardScreen
+import vn.start.dashboard.ui.DashboardScreen
 
 data object DashBoardRoute {
     const val route = "dashboard_route"
@@ -34,7 +34,7 @@ fun NavGraphBuilder.dashBoardSection(
         route = DashBoardBaseRoute.route
     ) {
         composable(DashBoardRoute.route) {
-            DashBoardScreen()
+            DashboardScreen()
         }
         topicDestination()
     }

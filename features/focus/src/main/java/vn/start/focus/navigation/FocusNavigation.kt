@@ -1,6 +1,5 @@
 package vn.start.focus.navigation
 
-import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -8,31 +7,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import vn.start.focus.ui.FocusScreen
 
-@SuppressLint("MissingSerializableAnnotation")
-data object FocusRoute {
-    const val route = "focus_route"
+
+sealed class FocusNavigation(val route: String) {
+    // Subgraph root
+    data object Base : FocusNavigation("focus_base_route")
+
+    data object Main : FocusNavigation("focus_route")
+
+    data object Detail : FocusNavigation("focus_detail/{id}") {
+        fun createRoute(id: String) = "focus_detail/$id"
+    }
 }
 
-@SuppressLint("MissingSerializableAnnotation")
-data object FocusBaseRoute {
-    const val route = "focus_base_route"
+fun NavGraphBuilder.focusSection() {
+    navigation(
+        startDestination = FocusNavigation.Main.route,
+        route = FocusNavigation.Base.route
+    ) {
+        composable(FocusNavigation.Main.route) {
+            FocusScreen()
+        }
+
+        composable(FocusNavigation.Detail.route) { backStackEntry ->
+//            val id = backStackEntry.arguments?.getString("id")
+//            FocusDetailScreen(id = id ?: "")
+        }
+    }
 }
 
 fun NavController.navigateToFocus(navOptions: NavOptions? = null) {
-    navigate(FocusRoute.route, navOptions)
+    navigate(FocusNavigation.Base.route, navOptions)
 }
 
-fun NavGraphBuilder.focusSection(
-    onTopicClick: (String) -> Unit,
-    topicDestination: NavGraphBuilder.() -> Unit,
-) {
-    navigation(
-        startDestination = FocusRoute.route,
-        route = FocusBaseRoute.route
-    ) {
-        composable(route = FocusRoute.route) {
-            FocusScreen()
-        }
-        topicDestination()
-    }
+fun NavController.navigateToFocusDetail(id: String, navOptions: NavOptions? = null) {
+    navigate(FocusNavigation.Detail.createRoute(id), navOptions)
 }
+

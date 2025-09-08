@@ -1,7 +1,7 @@
 
 # 🧱 Android Base Project (Modern, Modular, Scalable)
 
-A robust Android base project built with **Kotlin**, **Jetpack Compose**, and **Clean Architecture** principles. Inspired by Google's [Now in Android](https://github.com/android/nowinandroid), this template is optimized for scalability, testability, and production-readiness.
+A robust Android base project built with **Kotlin**, **Jetpack Compose**, and **Clean Architecture** principles. Inspired by Google's [App](https://github.com/android/nowinandroid), this template is optimized for scalability, testability, and production-readiness.
 
 ---
 

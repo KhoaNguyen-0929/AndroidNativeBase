@@ -7,35 +7,31 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import vn.start.dashboard.ui.DashboardScreen
 
-data object DashBoardRoute {
-    const val route = "dashboard_route"
+/**
+ * Navigation destinations for Dashboard feature
+ */
+sealed class DashboardNavigation(val route: String) {
+    // Subgraph root
+    data object Base : DashboardNavigation("dashboard_base_route")
+
+    // Main screen
+    data object Main : DashboardNavigation("dashboard_route")
 }
 
-data object DashBoardBaseRoute {
-    const val route = "dashboard_base"
+fun NavController.navigateToDashboard(navOptions: NavOptions? = null) {
+    navigate(DashboardNavigation.Base.route, navOptions)
 }
-
-fun NavController.navigateToDashBoard(navOptions: NavOptions) =
-    navigate(route = DashBoardRoute.route, navOptions)
 
 /**
- *  The DashBoard section of the app. It can also display information about topics.
- *  This should be supplied from a separate module.
- *
- *  @param onTopicClick - Called when a topic is clicked, contains the ID of the topic
- *  @param topicDestination - Destination for topic content
+ * Dashboard section of the app
  */
-fun NavGraphBuilder.dashBoardSection(
-    onTopicClick: (String) -> Unit,
-    topicDestination: NavGraphBuilder.() -> Unit,
-) {
+fun NavGraphBuilder.dashboardSection() {
     navigation(
-        startDestination = DashBoardRoute.route,
-        route = DashBoardBaseRoute.route
+        startDestination = DashboardNavigation.Main.route,
+        route = DashboardNavigation.Base.route,
     ) {
-        composable(DashBoardRoute.route) {
+        composable(DashboardNavigation.Main.route) {
             DashboardScreen()
         }
-        topicDestination()
     }
 }

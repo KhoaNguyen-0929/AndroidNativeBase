@@ -7,30 +7,31 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import vn.start.planning.ui.PlanningScreen
 
+/**
+ * Navigation destinations for Planning feature
+ */
+sealed class PlanningNavigation(val route: String) {
+    // Subgraph root
+    data object Base : PlanningNavigation("planning_base_route")
 
-data object PlanningRoute {
-    const val route = "planning_route"
-}
-
-data object PlanningBaseRoute {
-    const val route = "planning_base_route"
+    // Main screen
+    data object Main : PlanningNavigation("planning_route")
 }
 
 fun NavController.navigateToPlanning(navOptions: NavOptions? = null) {
-    navigate(PlanningRoute.route, navOptions)
+    navigate(PlanningNavigation.Base.route, navOptions)
 }
 
-fun NavGraphBuilder.planningSection(
-    onTopicClick: (String) -> Unit,
-    topicDestination: NavGraphBuilder.() -> Unit,
-) {
+/**
+ * Planning section of the app
+ */
+fun NavGraphBuilder.planningSection() {
     navigation(
-        startDestination = PlanningRoute.route,
-        route = PlanningBaseRoute.route
+        startDestination = PlanningNavigation.Main.route,
+        route = PlanningNavigation.Base.route,
     ) {
-        composable(PlanningRoute.route) {
+        composable(PlanningNavigation.Main.route) {
             PlanningScreen()
         }
-        topicDestination()
     }
 }

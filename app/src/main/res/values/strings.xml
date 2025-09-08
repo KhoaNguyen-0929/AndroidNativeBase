@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AndroidNativeBase</string>
+    <string name="app_focus">Focus</string>
+    <string name="app_planning">Planning</string>
+    <string name="app_dash_board">DashBoard</string>
 </resources>

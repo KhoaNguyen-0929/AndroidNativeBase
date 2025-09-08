@@ -78,7 +78,7 @@ dependencies {
     implementation(libs.okhttp.logging)
 
     ksp(libs.room.compiler)
-
+    api(libs.kotlinx.datetime)
     implementation(project(":domain"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))

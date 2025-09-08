@@ -74,7 +74,7 @@ fun CustomBackground(
  * @param content The background content.
  */
 @Composable
-fun NiaGradientBackground(
+fun AppGradientBackground(
     modifier: Modifier = Modifier,
     gradientColors: GradientColors = LocalGradientColors.current,
     content: @Composable () -> Unit,
@@ -175,7 +175,7 @@ fun BackgroundAndroid() {
 @Composable
 fun GradientBackgroundDefault() {
     CustomAppTheme(disableDynamicTheming = true) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        AppGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -183,7 +183,7 @@ fun GradientBackgroundDefault() {
 @Composable
 fun GradientBackgroundDynamic() {
     CustomAppTheme(disableDynamicTheming = false) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        AppGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -191,6 +191,6 @@ fun GradientBackgroundDynamic() {
 @Composable
 fun GradientBackgroundAndroid() {
     CustomAppTheme(androidTheme = true) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        AppGradientBackground(Modifier.size(100.dp), content = {})
     }
 }

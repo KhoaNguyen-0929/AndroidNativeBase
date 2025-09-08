@@ -1,14 +1,12 @@
 package vn.start.androidnativebase.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
-import vn.start.dashboard.navigation.DashBoardBaseRoute
-import vn.start.dashboard.navigation.DashBoardRoute
+import vn.start.androidnativebase.R
+import vn.start.dashboard.navigation.DashboardNavigation
 import vn.start.designsystem.icon.AppIcon
-import kotlin.reflect.KClass
-import vn.start.focus.navigation.FocusRoute
-import vn.start.focus.navigation.FocusBaseRoute
-import vn.start.planning.navigation.PlanningBaseRoute
-import vn.start.planning.navigation.PlanningRoute
+import vn.start.focus.navigation.FocusNavigation
+import vn.start.planning.navigation.PlanningNavigation
 
 /**
  * Type for the top level destinations in the application. Contains metadata about the destination
@@ -27,27 +25,33 @@ import vn.start.planning.navigation.PlanningRoute
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-//    @StringRes val iconTextId: Int,
-//    @StringRes val titleTextId: Int,
-    val route: KClass<*>,
-    val baseRoute: KClass<*> = route,
+    @StringRes val iconTextId: Int,
+    @StringRes val titleTextId: Int,
+    val route: String,
+    val baseRoute: String = route,
 ) {
     FOCUS(
         selectedIcon = AppIcon.Person,
         unselectedIcon = AppIcon.Settings,
-        route = FocusRoute::class,
-        baseRoute = FocusBaseRoute::class,
+        route = FocusNavigation.Main.route,
+        iconTextId = R.string.app_focus,
+        titleTextId= R.string.app_focus,
+        baseRoute = FocusNavigation.Base.route,
     ),
     PLANNING(
         selectedIcon = AppIcon.Person,
         unselectedIcon = AppIcon.Settings,
-        route = PlanningRoute::class,
-        baseRoute = PlanningBaseRoute::class,
+        route = PlanningNavigation.Main.route,
+        iconTextId = R.string.app_planning,
+        titleTextId= R.string.app_planning,
+        baseRoute = PlanningNavigation.Base.route,
     ),
     DASHBOARD(
         selectedIcon = AppIcon.Person,
         unselectedIcon = AppIcon.Settings,
-        route = DashBoardRoute::class,
-        baseRoute = DashBoardBaseRoute::class,
+        route = DashboardNavigation.Main.route,
+        iconTextId = R.string.app_dash_board,
+        titleTextId= R.string.app_dash_board,
+        baseRoute = DashboardNavigation.Base.route,
     ),
 }

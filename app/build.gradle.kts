@@ -100,6 +100,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    implementation(libs.kotlinx.datetime)
+
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":features:focus"))
@@ -108,4 +110,5 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:ui"))
 }

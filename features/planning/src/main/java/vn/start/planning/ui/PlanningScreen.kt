@@ -1,4 +1,7 @@
 package vn.start.planning.ui
 
-class PlanningScreen {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun PlanningScreen() {
 }

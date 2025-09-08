@@ -13,7 +13,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
-import vn.start.dashboard.navigation.navigateToDashBoard
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.datetime.TimeZone
+import vn.start.dashboard.navigation.navigateToDashboard
+import vn.start.data.utils.TimeZoneMonitor
 import vn.start.focus.navigation.navigateToFocus
 import vn.start.planning.navigation.navigateToPlanning
 
@@ -24,16 +28,18 @@ import vn.start.planning.navigation.navigateToPlanning
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    timeZoneMonitor: TimeZoneMonitor,
 ): AppState {
     return remember(navController, coroutineScope) {
-        AppState(navController, coroutineScope)
+        AppState(navController, coroutineScope, timeZoneMonitor)
     }
 }
 
 @Stable
 class AppState(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope,
+    timeZoneMonitor: TimeZoneMonitor,
 ) {
     private val previousDestination = mutableStateOf<NavDestination?>(null)
 
@@ -53,13 +59,20 @@ class AppState(
         @SuppressLint("RestrictedApi") @Composable get() {
             return TopLevelDestination.entries.firstOrNull { topLevelDestination ->
                 currentDestination?.hasRoute(
-                    topLevelDestination.route.toString(),
+                    topLevelDestination.route,
                     arguments = null
                 ) == true
             }
         }
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
+
+    val currentTimeZone = timeZoneMonitor.currentTimeZone
+        .stateIn(
+            coroutineScope,
+            SharingStarted.WhileSubscribed(5_000),
+            TimeZone.currentSystemDefault(),
+        )
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
@@ -73,7 +86,7 @@ class AppState(
         when (topLevelDestination) {
             TopLevelDestination.FOCUS -> navController.navigateToFocus(topLevelNavOptions)
             TopLevelDestination.PLANNING -> navController.navigateToPlanning(topLevelNavOptions)
-            TopLevelDestination.DASHBOARD -> navController.navigateToDashBoard(topLevelNavOptions)
+            TopLevelDestination.DASHBOARD -> navController.navigateToDashboard(topLevelNavOptions)
         }
     }
 

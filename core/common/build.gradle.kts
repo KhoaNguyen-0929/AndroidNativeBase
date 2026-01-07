@@ -21,4 +21,6 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.gson)
 }

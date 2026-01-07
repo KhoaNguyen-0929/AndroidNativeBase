@@ -4,21 +4,29 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import retrofit2.Response
-import vn.start.common.model.NetworkResult
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
+/**
+ * Wraps a Retrofit API call in a Flow that emits NetworkResult states.
+ * Handles success, error responses, and exceptions.
+ */
 inline fun <T> safeApiFlow(
     crossinline apiCall: suspend () -> Response<T>
 ): Flow<NetworkResult<T>> = flow {
+    emit(NetworkResult.Loading)
     try {
         val response = apiCall()
 
         if (response.isSuccessful) {
             val body = response.body()
             if (body != null) {
-                emit(NetworkResult.Success(message = null, data = body))
+                emit(NetworkResult.Success(data = body))
             } else {
                 emit(
                     NetworkResult.Error(
@@ -28,7 +36,7 @@ inline fun <T> safeApiFlow(
                 )
             }
         } else {
-            val errorMsg = parseError(response)
+            val errorMsg = parseErrorBody(response)
             emit(
                 NetworkResult.Error(
                     message = errorMsg,
@@ -41,37 +49,40 @@ inline fun <T> safeApiFlow(
     }
 }.flowOn(Dispatchers.IO)
 
-
-fun handleException(e: Exception): NetworkResult.Error<Nothing> {
-    val isTimeout = e is SocketTimeoutException || e is UnknownHostException
-    val msg = when {
-        isTimeout -> "Request timed out, please try again."
-        e.message.isNullOrBlank().not() -> e.message!!
-        else -> "Unexpected error occurred"
+/**
+ * Handles exceptions and converts them to NetworkResult.Error
+ */
+fun handleException(e: Exception): NetworkResult.Error {
+    val message = when (e) {
+        is SocketTimeoutException -> "Request timed out. Please try again."
+        is UnknownHostException -> "No internet connection. Please check your network."
+        else -> e.message?.takeIf { it.isNotBlank() } ?: "An unexpected error occurred"
     }
-
     return NetworkResult.Error(
-        message = msg,
-        code = 1
+        message = message,
+        exception = e
     )
 }
 
-
-fun parseError(response: Response<*>): String {
+/**
+ * Parses error body from Retrofit response.
+ * Attempts to extract "message" or "error" field from JSON.
+ */
+fun parseErrorBody(response: Response<*>): String {
     return runCatching {
-        ""
-//        val errorBody = response.errorBody()?.string().orEmpty()
-//        if (errorBody.isBlank()) return "Empty error body"
-//
-//        val json = JSONObject(errorBody)
-//
-//        // Ưu tiên field "message", nếu không có thì tìm "error" hoặc fallback
-//        json.optString("message")
-//            .ifBlank { json.optString("error") }
-//            .ifBlank { "Unknown server error" }
+        val errorBody = response.errorBody()?.string().orEmpty()
+        if (errorBody.isBlank()) return "Empty error body"
 
+        val jsonObject = Json.parseToJsonElement(errorBody).jsonObject
+        val message = jsonObject["message"]?.jsonPrimitive?.contentOrNull
+        val error = jsonObject["error"]?.jsonPrimitive?.contentOrNull
+
+        when {
+            !message.isNullOrBlank() -> message
+            !error.isNullOrBlank() -> error
+            else -> "Unknown server error"
+        }
     }.getOrElse {
-        "Failed to parse error response: {it.localizedMessage ?: "
+        "Failed to parse error response: ${it.localizedMessage}"
     }
 }
-

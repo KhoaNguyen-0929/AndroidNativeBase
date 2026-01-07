@@ -5,9 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import vn.start.domain.repository.DemoRepository
-import vn.start.domain.repository.ScheduleRepository
-import vn.start.domain.usecase.DemoUseCase
-import vn.start.domain.usecase.schedule.AddScheduleUseCase
+import vn.start.domain.usecase.GetDemoUseCase
 import javax.inject.Singleton
 
 @Module
@@ -15,13 +13,7 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Singleton
     @Provides
-    fun provideDemoUseCase(demoRepository: DemoRepository): DemoUseCase {
-        return DemoUseCase(demoRepository)
+    fun provideGetDemoUseCase(demoRepository: DemoRepository): GetDemoUseCase {
+        return GetDemoUseCase(demoRepository)
     }
-    @Singleton
-    @Provides
-    fun provideAddScheduleUseCase(scheduleRepository: ScheduleRepository): AddScheduleUseCase {
-        return AddScheduleUseCase(scheduleRepository)
-    }
-
 }

@@ -107,7 +107,6 @@ dependencies {
     implementation(project(":features:focus"))
     implementation(project(":features:planning"))
     implementation(project(":features:dashboard"))
-    implementation(project(":core:model"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:ui"))

@@ -2,9 +2,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
@@ -26,9 +23,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -54,8 +48,4 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":domain"))
-    implementation(project(":core:designsystem"))
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 }

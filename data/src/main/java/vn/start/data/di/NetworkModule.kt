@@ -73,8 +73,6 @@ object NetworkModule {
                     it.request().newBuilder().addHeader("Connection", "Close").build()
                 it.proceed(request)
             }
-//            .sslSocketFactory(socketFactory, trustManager)
-            .hostnameVerifier { _, _ -> true }
             .build()
     }
 

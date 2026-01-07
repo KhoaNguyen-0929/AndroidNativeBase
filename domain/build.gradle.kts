@@ -1,5 +1,4 @@
 plugins {
-    id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
     kotlin("kapt")
 }
@@ -20,5 +19,5 @@ dependencies {
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.retrofit)
+    implementation(project(":core:common"))
 }

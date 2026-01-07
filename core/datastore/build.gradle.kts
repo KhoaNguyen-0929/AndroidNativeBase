@@ -1,16 +1,14 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
-    namespace = "vn.start.data"
+    namespace = "vn.start.datastore"
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -23,29 +21,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-    }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    flavorDimensions += "env"
-
-    productFlavors {
-        create("dev") {
-            dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
-        }
-
-        create("staging") {
-            dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
-        }
-
-        create("prod") {
-            dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
         }
     }
     compileOptions {
@@ -65,17 +40,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-    implementation(libs.gson)
-
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
-
-    implementation(project(":domain"))
-    implementation(project(":core:common"))
 }

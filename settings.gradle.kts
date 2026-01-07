@@ -1,11 +1,16 @@
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -16,14 +21,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidNativeBase"
 include(":app")
+include(":core:common")
 include(":domain")
 include(":data")
+include(":core:ui")
+include(":core:notifications")
+include(":core:designsystem")
 include(":features:focus")
 include(":features:planning")
 include(":features:dashboard")
-include(":core:model")
-include(":core:common")
-include(":core:designsystem")
-include(":core:notifications")
-include(":core:ui")
-include(":core:di")
+includeBuild("build-logic")
+include(":core:datastore")

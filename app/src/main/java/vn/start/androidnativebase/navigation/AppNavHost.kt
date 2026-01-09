@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import vn.start.dashboard.navigation.dashBoardSection
+import vn.start.dashboard.navigation.dashboardSection
 import vn.start.focus.navigation.FocusBaseRoute
 import vn.start.focus.navigation.focusSection
 import vn.start.planning.navigation.planningSection
@@ -27,7 +27,7 @@ fun AppNavHost(
             }
         )
 
-        dashBoardSection(
+        dashboardSection(
             navController = navController,
             onTopicClick = { /* Handle topic click */ },
             topicDestination = {

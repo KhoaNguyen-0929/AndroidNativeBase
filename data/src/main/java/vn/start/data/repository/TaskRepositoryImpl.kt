@@ -14,22 +14,22 @@ class TaskRepositoryImpl @Inject constructor(
 ) : TaskRepository {
 
     override fun getAllTasks(): Flow<List<TaskModel>> {
-        return taskDao.getTasks().map { list -> list.map { taskMapper.entityToModel(it) } }
+        return taskDao.getTasks().map { list -> list.map { taskMapper.fromEntity(it) } }
     }
 
     override suspend fun getTaskById(id: Int): TaskModel? {
-        return taskDao.getTaskById(id)?.let { taskMapper.entityToModel(it) }
+        return taskDao.getTaskById(id)?.let { taskMapper.fromEntity(it) }
     }
 
     override suspend fun insertTask(task: TaskModel) {
-        return taskDao.insertTask(taskMapper.modelToEntity(task))
+        return taskDao.insertTask(taskMapper.toEntity(task))
     }
 
     override suspend fun updateTask(task: TaskModel) {
-        return taskDao.updateTask(taskMapper.modelToEntity(task))
+        return taskDao.updateTask(taskMapper.toEntity(task))
     }
 
     override suspend fun deleteTask(task: TaskModel) {
-        return taskDao.deleteTask(taskMapper.modelToEntity(task))
+        return taskDao.deleteTask(taskMapper.toEntity(task))
     }
 }

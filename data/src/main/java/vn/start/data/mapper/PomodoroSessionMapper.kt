@@ -1,5 +1,6 @@
 package vn.start.data.mapper
 
+import vn.start.common.Mapper
 import vn.start.data.local.database.entities.PomodoroSession
 import vn.start.domain.model.PomodoroSessionModel
 import javax.inject.Inject
@@ -8,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class PomodoroSessionMapper @Inject constructor() : Mapper<PomodoroSession, PomodoroSessionModel> {
 
-    override fun entityToModel(entity: PomodoroSession): PomodoroSessionModel {
+    override fun fromEntity(entity: PomodoroSession): PomodoroSessionModel {
         return PomodoroSessionModel(
             id = entity.id,
             taskId = entity.taskId,
@@ -18,7 +19,7 @@ class PomodoroSessionMapper @Inject constructor() : Mapper<PomodoroSession, Pomo
         )
     }
 
-    override fun modelToEntity(model: PomodoroSessionModel): PomodoroSession {
+    override fun toEntity(model: PomodoroSessionModel): PomodoroSession {
         return PomodoroSession(
             id = model.id,
             taskId = model.taskId,

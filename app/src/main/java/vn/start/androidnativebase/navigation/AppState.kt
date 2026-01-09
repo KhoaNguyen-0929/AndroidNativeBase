@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
-import vn.start.dashboard.navigation.navigateToDashBoard
+import vn.start.dashboard.navigation.navigateToDashboard
 import vn.start.focus.navigation.navigateToFocus
 import vn.start.planning.navigation.navigateToPlanning
 
@@ -58,7 +58,7 @@ class AppState(
         @Composable get() {
             val currentDestinationRoute = currentDestination?.route
             return TopLevelDestination.entries.firstOrNull { destination ->
-                currentDestinationRoute?.contains(destination.baseRoute.simpleName ?: "") == true
+                currentDestinationRoute?.contains(destination.baseRoute) == true
             }
         }
 
@@ -76,7 +76,7 @@ class AppState(
         when (topLevelDestination) {
             TopLevelDestination.FOCUS -> navController.navigateToFocus(topLevelNavOptions)
             TopLevelDestination.PLANNING -> navController.navigateToPlanning(topLevelNavOptions)
-            TopLevelDestination.DASHBOARD -> navController.navigateToDashBoard(topLevelNavOptions)
+            TopLevelDestination.DASHBOARD -> navController.navigateToDashboard(topLevelNavOptions)
         }
     }
 

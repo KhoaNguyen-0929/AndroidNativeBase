@@ -47,3 +47,12 @@ fun NavGraphBuilder.planningSection(
         topicDestination()
     }
 }
+
+sealed interface PlanningNavigation {
+    object Main : PlanningNavigation {
+        val route = PlanningRoute
+    }
+    object Base : PlanningNavigation {
+        val route = PlanningBaseRoute
+    }
+}

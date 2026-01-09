@@ -47,3 +47,12 @@ fun NavGraphBuilder.focusSection(
         topicDestination()
     }
 }
+
+sealed interface FocusNavigation {
+    object Main : FocusNavigation {
+        val route = FocusRoute
+    }
+    object Base : FocusNavigation {
+        val route = FocusBaseRoute
+    }
+}

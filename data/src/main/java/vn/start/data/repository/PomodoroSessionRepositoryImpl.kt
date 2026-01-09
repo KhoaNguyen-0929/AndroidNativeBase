@@ -17,15 +17,15 @@ class PomodoroSessionRepositoryImpl @Inject constructor(
 
     override fun getSessionsForTask(taskId: Int): Flow<List<PomodoroSessionModel>> {
         return pomodoroSessionDao.getSessionsForTask(taskId).map { list ->
-            list.map { pomodoroSessionMapper.entityToModel(it) }
+            list.map { pomodoroSessionMapper.fromEntity(it) }
         }
     }
 
     override suspend fun insertSession(session: PomodoroSessionModel) {
-        return pomodoroSessionDao.insertSession(pomodoroSessionMapper.modelToEntity(session))
+        return pomodoroSessionDao.insertSession(pomodoroSessionMapper.toEntity(session))
     }
 
     override suspend fun deleteSession(session: PomodoroSessionModel) {
-        return pomodoroSessionDao.deleteSession(pomodoroSessionMapper.modelToEntity(session))
+        return pomodoroSessionDao.deleteSession(pomodoroSessionMapper.toEntity(session))
     }
 }

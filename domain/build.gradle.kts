@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    id("focus.kotlin.jvm")
     alias(libs.plugins.ksp)
 }
 
@@ -8,16 +8,20 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
 dependencies {
+    // Coroutines
     implementation(libs.kotlinx.coroutines.core)
+
+    // Hilt (core only for JVM modules)
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
 
+    // Module dependencies
     implementation(project(":core:common"))
 }

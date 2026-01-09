@@ -11,33 +11,33 @@ import vn.start.dashboard.ui.DashBoardScreen
 import vn.start.dashboard.ui.DemoScreen
 
 @Serializable
-data object DashBoardRoute // route to DashBoard screen
+data object DashboardRoute // route to Dashboard screen
 
 @Serializable
 data object DemoRoute // route to Demo screen
 
 @Serializable
-data object DashBoardBaseRoute // route to base navigation graph
+data object DashboardBaseRoute // route to base navigation graph
 
-fun NavController.navigateToDashBoard(navOptions: NavOptions) = navigate(route = DashBoardRoute, navOptions)
+fun NavController.navigateToDashboard(navOptions: NavOptions) = navigate(route = DashboardRoute, navOptions)
 
 fun NavController.navigateToDemo(navOptions: NavOptions? = null) = navigate(route = DemoRoute, navOptions)
 
 /**
- *  The DashBoard section of the app. It can also display information about topics.
+ *  The Dashboard section of the app. It can also display information about topics.
  *  This should be supplied from a separate module.
  *
  *  @param navController - Navigation controller for navigating within this section
  *  @param onTopicClick - Called when a topic is clicked, contains the ID of the topic
  *  @param topicDestination - Destination for topic content
  */
-fun NavGraphBuilder.dashBoardSection(
+fun NavGraphBuilder.dashboardSection(
     navController: NavController,
     onTopicClick: (String) -> Unit,
     topicDestination: NavGraphBuilder.() -> Unit,
 ) {
-    navigation<DashBoardBaseRoute>(startDestination = DashBoardRoute) {
-        composable<DashBoardRoute>(
+    navigation<DashboardBaseRoute>(startDestination = DashboardRoute) {
+        composable<DashboardRoute>(
 //            deepLinks = listOf(
 //                navDeepLink {
 //                    /**
@@ -59,5 +59,14 @@ fun NavGraphBuilder.dashBoardSection(
         }
 
         topicDestination()
+    }
+}
+
+sealed interface DashboardNavigation {
+    object Main : DashboardNavigation {
+        val route = DashboardRoute
+    }
+    object Base : DashboardNavigation {
+        val route = DashboardBaseRoute
     }
 }

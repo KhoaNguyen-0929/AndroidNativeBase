@@ -1,5 +1,6 @@
 package vn.start.data.mapper
 
+import vn.start.common.Mapper
 import vn.start.data.local.database.entities.Task
 import vn.start.data.local.database.entities.TaskStatus
 import vn.start.domain.model.TaskModel
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class TaskMapper @Inject constructor() : Mapper<Task, TaskModel> {
 
-    override fun entityToModel(entity: Task): TaskModel {
+    override fun fromEntity(entity: Task): TaskModel {
         return TaskModel(
             id = entity.id,
             title = entity.title,
@@ -22,7 +23,7 @@ class TaskMapper @Inject constructor() : Mapper<Task, TaskModel> {
         )
     }
 
-    override fun modelToEntity(model: TaskModel): Task {
+    override fun toEntity(model: TaskModel): Task {
         return Task(
             id = model.id,
             title = model.title,

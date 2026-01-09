@@ -17,15 +17,15 @@ class ScheduleRepositoryImpl @Inject constructor(
 
     override fun getSchedulesForTask(taskId: Int): Flow<List<ScheduleModel>> {
         return scheduleDao.getSchedulesForTask(taskId).map { list ->
-            list.map { scheduleMapper.entityToModel(it) }
+            list.map { scheduleMapper.fromEntity(it) }
         }
     }
 
     override suspend fun insertSchedule(schedule: ScheduleModel) {
-        return scheduleDao.insertSchedule(scheduleMapper.modelToEntity(schedule))
+        return scheduleDao.insertSchedule(scheduleMapper.toEntity(schedule))
     }
 
     override suspend fun deleteSchedule(schedule: ScheduleModel) {
-        return scheduleDao.deleteSchedule(scheduleMapper.modelToEntity(schedule))
+        return scheduleDao.deleteSchedule(scheduleMapper.toEntity(schedule))
     }
 }

@@ -18,42 +18,13 @@ package vn.start.androidnativebase
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import vn.start.model.DarkThemeConfig
-import vn.start.model.ThemeBrand
-import vn.start.model.UserData
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
-//    userDataRepository: UserDataRepository,
-) : ViewModel() {
-//    val uiState: StateFlow<MainActivityUiState> = userDataRepository.userData.map {
-//        MainActivityUiState.Success(it)
-//    }.stateIn(
-//        scope = viewModelScope,
-//        initialValue = MainActivityUiState.Loading,
-//        started = SharingStarted.WhileSubscribed(5_000),
-//    )
-}
+class MainActivityViewModel @Inject constructor() : ViewModel()
 
 sealed interface MainActivityUiState {
     data object Loading : MainActivityUiState
-
-    data class Success(val userData: UserData) : MainActivityUiState {
-        override val shouldDisableDynamicTheming = !userData.useDynamicColor
-
-        override val shouldUseAndroidTheme: Boolean = when (userData.themeBrand) {
-            ThemeBrand.DEFAULT -> false
-            ThemeBrand.ANDROID -> true
-        }
-
-        override fun shouldUseDarkTheme(isSystemDarkTheme: Boolean) =
-            when (userData.darkThemeConfig) {
-                DarkThemeConfig.FOLLOW_SYSTEM -> isSystemDarkTheme
-                DarkThemeConfig.LIGHT -> false
-                DarkThemeConfig.DARK -> true
-            }
-    }
 
     /**
      * Returns `true` if the state wasn't loaded yet and it should keep showing the splash screen.

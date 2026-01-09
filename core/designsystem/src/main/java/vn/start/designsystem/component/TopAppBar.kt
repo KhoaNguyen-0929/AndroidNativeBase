@@ -18,7 +18,6 @@
 
 package vn.start.designsystem.component
 
-import android.R
 import androidx.annotation.StringRes
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -81,7 +80,7 @@ fun CustomTopAppBar(
 private fun CustomTopAppBarPreview() {
     CustomAppTheme {
         CustomTopAppBar(
-            titleRes = R.string.untitled,
+            titleRes = 0, // Use actual string resource in production
             navigationIcon = AppIcon.Search,
             navigationIconContentDescription = "Navigation icon",
             actionIcon = AppIcon.MoreVert,

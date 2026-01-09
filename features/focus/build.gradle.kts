@@ -2,9 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -50,9 +48,11 @@ dependencies {
     implementation(libs.androidx.compose.material3.adaptive.navigation)
 
     implementation(libs.kotlinx.serialization.json)
-    implementation(project(":domain"))
-    implementation(project(":core:designsystem"))
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 }

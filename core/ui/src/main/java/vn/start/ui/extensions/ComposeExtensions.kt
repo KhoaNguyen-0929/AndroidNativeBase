@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import coil.network.HttpException
+import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
 fun Throwable.is500InternalError() = this is HttpException && code() == 500

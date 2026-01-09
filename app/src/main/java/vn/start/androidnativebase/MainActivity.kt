@@ -4,56 +4,48 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import vn.start.androidnativebase.navigation.NiaApp
+import vn.start.androidnativebase.navigation.AppNavHost
+import vn.start.androidnativebase.navigation.CustomNavigationSuiteScaffold
 import vn.start.androidnativebase.navigation.rememberAppState
 import vn.start.androidnativebase.ui.theme.AndroidNativeBaseTheme
-import vn.start.data.utils.TimeZoneMonitor
-import vn.start.ui.LocalTimeZone
-import javax.inject.Inject
 
+/**
+ * Main activity for the AndroidNativeBase app.
+ * Sets up the navigation host, theme, and navigation UI.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var timeZoneMonitor: TimeZoneMonitor
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        var themeSettings by mutableStateOf(
-//            ThemeSettings(
-//                darkTheme = resources.configuration.isSystemInDarkTheme,
-//                androidTheme = MainActivityUiState.Loading.shouldUseAndroidTheme,
-//                disableDynamicTheming = MainActivityUiState.Loading.shouldDisableDynamicTheming,
-//            ),
-//        )
         enableEdgeToEdge()
         setContent {
-            val appState = rememberAppState(
-                timeZoneMonitor = timeZoneMonitor
-            )
+            AndroidNativeBaseTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    val appState = rememberAppState(navController)
 
-            val currentTimeZone by appState.currentTimeZone.collectAsStateWithLifecycle()
-
-            CompositionLocalProvider(
-                LocalTimeZone provides currentTimeZone,
-            ) {
-                AndroidNativeBaseTheme {
-                    NiaApp(appState = appState)
+                    CustomNavigationSuiteScaffold(
+                        appState = appState,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        AppNavHost(
+                            navController = navController,
+                            appState = appState
+                        )
+                    }
                 }
             }
         }
     }
 }
-
-/**
- * Class for the system theme settings.
- * This wrapping class allows us to combine all the changes and prevent unnecessary recompositions.
- */
-data class ThemeSettings(
-    val darkTheme: Boolean,
-    val androidTheme: Boolean,
-    val disableDynamicTheming: Boolean,
-)

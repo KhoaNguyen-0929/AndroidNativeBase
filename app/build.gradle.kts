@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -58,7 +58,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "2.0.21"
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -66,26 +66,30 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // Disable Hilt aggregation task due to JavaPoet API issues with Kotlin 2.0.21
+    // This is an optional optimization for build performance
+    hilt {
+        enableAggregatingTask = false
+    }
+}
+
+// Add KSP options for proper Hilt processing
+ksp {
+    arg("room.generateKotlin", "true")
+    arg("correctErrorTypes", "true")
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.ui.test.junit4)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.runtime.android)
-    implementation(libs.androidx.foundation.android)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.androidx.ui.tooling.preview.android)
-    implementation(libs.androidx.adaptive.android)
-    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.compose.material3.adaptive.navigation)
@@ -98,9 +102,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
-    implementation(libs.kotlinx.datetime)
+    // Network dependencies for app module (moved from data as KSP workaround)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 
     implementation(project(":domain"))
     implementation(project(":data"))
@@ -109,5 +118,4 @@ dependencies {
     implementation(project(":features:dashboard"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
-    implementation(project(":core:ui"))
 }

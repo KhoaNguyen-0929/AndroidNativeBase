@@ -7,6 +7,7 @@ package vn.start.common
  * @param T The type of data in the Success state
  */
 sealed interface UiState<out T> {
+    data object Idle : UiState<Nothing>
     data object Loading : UiState<Nothing>
     data class Success<T>(val data: T) : UiState<T>
     data class Error(val message: String, val throwable: Throwable? = null) : UiState<Nothing>
@@ -20,6 +21,7 @@ fun <T> UiState<T>.getOrNull(): T? = (this as? UiState.Success)?.data
 fun <T> UiState<T>.errorOrNull(): String? = (this as? UiState.Error)?.message
 
 inline fun <T, R> UiState<T>.map(transform: (T) -> R): UiState<R> = when (this) {
+    is UiState.Idle -> UiState.Idle
     is UiState.Loading -> UiState.Loading
     is UiState.Success -> UiState.Success(transform(data))
     is UiState.Error -> this
@@ -37,6 +39,11 @@ inline fun <T> UiState<T>.onError(action: (String, Throwable?) -> Unit): UiState
 
 inline fun <T> UiState<T>.onLoading(action: () -> Unit): UiState<T> {
     if (this is UiState.Loading) action()
+    return this
+}
+
+inline fun <T> UiState<T>.onIdle(action: () -> Unit): UiState<T> {
+    if (this is UiState.Idle) action()
     return this
 }
 

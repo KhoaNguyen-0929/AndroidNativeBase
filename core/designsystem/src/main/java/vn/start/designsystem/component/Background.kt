@@ -24,13 +24,12 @@ import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,6 +37,8 @@ import vn.start.designsystem.theme.GradientColors
 import vn.start.designsystem.theme.LocalBackgroundTheme
 import vn.start.designsystem.theme.LocalGradientColors
 import vn.start.designsystem.theme.CustomAppTheme
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.drawBehind
 import kotlin.math.tan
 
 /**
@@ -74,18 +75,20 @@ fun CustomBackground(
  * @param content The background content.
  */
 @Composable
-fun AppGradientBackground(
+fun CustomGradientBackground(
     modifier: Modifier = Modifier,
     gradientColors: GradientColors = LocalGradientColors.current,
     content: @Composable () -> Unit,
 ) {
-    val currentTopColor by rememberUpdatedState(gradientColors.top)
-    val currentBottomColor by rememberUpdatedState(gradientColors.bottom)
+    val currentTopColor = gradientColors.top
+    val currentBottomColor = gradientColors.bottom
+    val containerColor = gradientColors.container
+
     Surface(
-        color = if (gradientColors.container == Color.Unspecified) {
+        color = if (containerColor == Color.Unspecified) {
             Color.Transparent
         } else {
-            gradientColors.container
+            containerColor
         },
         modifier = modifier.fillMaxSize(),
     ) {
@@ -106,23 +109,27 @@ fun AppGradientBackground(
 
                     // Create the top gradient that fades out after the halfway point vertically
                     val topGradient = Brush.linearGradient(
-                        0f to if (currentTopColor == Color.Unspecified) {
-                            Color.Transparent
-                        } else {
-                            currentTopColor
-                        },
-                        0.724f to Color.Transparent,
+                        colorStops = arrayOf(
+                            0.0f to if (currentTopColor == Color.Unspecified) {
+                                Color.Transparent
+                            } else {
+                                currentTopColor
+                            },
+                            0.724f to Color.Transparent,
+                        ),
                         start = start,
                         end = end,
                     )
                     // Create the bottom gradient that fades in before the halfway point vertically
                     val bottomGradient = Brush.linearGradient(
-                        0.2552f to Color.Transparent,
-                        1f to if (currentBottomColor == Color.Unspecified) {
-                            Color.Transparent
-                        } else {
-                            currentBottomColor
-                        },
+                        colorStops = arrayOf(
+                            0.2552f to Color.Transparent,
+                            1.0f to if (currentBottomColor == Color.Unspecified) {
+                                Color.Transparent
+                            } else {
+                                currentBottomColor
+                            },
+                        ),
                         start = start,
                         end = end,
                     )
@@ -175,7 +182,7 @@ fun BackgroundAndroid() {
 @Composable
 fun GradientBackgroundDefault() {
     CustomAppTheme(disableDynamicTheming = true) {
-        AppGradientBackground(Modifier.size(100.dp), content = {})
+        CustomGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -183,7 +190,7 @@ fun GradientBackgroundDefault() {
 @Composable
 fun GradientBackgroundDynamic() {
     CustomAppTheme(disableDynamicTheming = false) {
-        AppGradientBackground(Modifier.size(100.dp), content = {})
+        CustomGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -191,6 +198,6 @@ fun GradientBackgroundDynamic() {
 @Composable
 fun GradientBackgroundAndroid() {
     CustomAppTheme(androidTheme = true) {
-        AppGradientBackground(Modifier.size(100.dp), content = {})
+        CustomGradientBackground(Modifier.size(100.dp), content = {})
     }
 }

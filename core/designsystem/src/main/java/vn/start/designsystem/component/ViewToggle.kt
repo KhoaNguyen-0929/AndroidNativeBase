@@ -35,7 +35,7 @@ import vn.start.designsystem.icon.AppIcon
 import vn.start.designsystem.theme.CustomAppTheme
 
 /**
- * App view toggle button with included trailing icon as well as compact and expanded
+ * Custom view toggle button with included trailing icon as well as compact and expanded
  * text label content slots.
  *
  * @param expanded Whether the view toggle is currently in expanded mode or compact mode.
@@ -47,7 +47,7 @@ import vn.start.designsystem.theme.CustomAppTheme
  * @param expandedText The text label content to show in compact mode.
  */
 @Composable
-fun AppViewToggleButton(
+fun CustomViewToggleButton(
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -62,9 +62,9 @@ fun AppViewToggleButton(
         colors = ButtonDefaults.textButtonColors(
             contentColor = MaterialTheme.colorScheme.onBackground,
         ),
-        contentPadding = AppViewToggleDefaults.ViewToggleButtonContentPadding,
+        contentPadding = CustomViewToggleDefaults.ViewToggleButtonContentPadding,
     ) {
-        AppViewToggleButtonContent(
+        CustomViewToggleButtonContent(
             text = if (expanded) expandedText else compactText,
             trailingIcon = {
                 Icon(
@@ -77,14 +77,14 @@ fun AppViewToggleButton(
 }
 
 /**
- * Internal App view toggle button content layout for arranging the text label and
+ * Internal custom view toggle button content layout for arranging the text label and
  * trailing icon.
  *
  * @param text The button text label content.
  * @param trailingIcon The button trailing icon content. Default is `null` for no trailing icon.
  */
 @Composable
-private fun AppViewToggleButtonContent(
+private fun CustomViewToggleButtonContent(
     text: @Composable () -> Unit,
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
@@ -114,7 +114,7 @@ private fun AppViewToggleButtonContent(
 fun ViewTogglePreviewExpanded() {
     CustomAppTheme {
         Surface {
-            AppViewToggleButton(
+            CustomViewToggleButton(
                 expanded = true,
                 onExpandedChange = { },
                 compactText = { Text(text = "Compact view") },
@@ -129,7 +129,7 @@ fun ViewTogglePreviewExpanded() {
 fun ViewTogglePreviewCompact() {
     CustomAppTheme {
         Surface {
-            AppViewToggleButton(
+            CustomViewToggleButton(
                 expanded = false,
                 onExpandedChange = { },
                 compactText = { Text(text = "Compact view") },
@@ -140,9 +140,9 @@ fun ViewTogglePreviewCompact() {
 }
 
 /**
- * App view toggle default values.
+ * Custom view toggle default values.
  */
-object AppViewToggleDefaults {
+object CustomViewToggleDefaults {
     // TODO: File bug
     // Various default button padding values aren't exposed via ButtonDefaults
     val ViewToggleButtonContentPadding =

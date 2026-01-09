@@ -5,41 +5,45 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import kotlinx.serialization.Serializable
 import vn.start.focus.ui.FocusScreen
 
+@Serializable
+data object FocusRoute // route to Focus screen
 
-sealed class FocusNavigation(val route: String) {
-    // Subgraph root
-    data object Base : FocusNavigation("focus_base_route")
+@Serializable
+data object FocusBaseRoute // route to base navigation graph
 
-    data object Main : FocusNavigation("focus_route")
+fun NavController.navigateToFocus(navOptions: NavOptions) = navigate(route = FocusRoute, navOptions)
 
-    data object Detail : FocusNavigation("focus_detail/{id}") {
-        fun createRoute(id: String) = "focus_detail/$id"
-    }
-}
-
-fun NavGraphBuilder.focusSection() {
-    navigation(
-        startDestination = FocusNavigation.Main.route,
-        route = FocusNavigation.Base.route
-    ) {
-        composable(FocusNavigation.Main.route) {
+/**
+ *  The Focus section of the app. It can also display information about topics.
+ *  This should be supplied from a separate module.
+ *
+ *  @param onTopicClick - Called when a topic is clicked, contains the ID of the topic
+ *  @param topicDestination - Destination for topic content
+ */
+fun NavGraphBuilder.focusSection(
+    onTopicClick: (String) -> Unit,
+    topicDestination: NavGraphBuilder.() -> Unit,
+) {
+    navigation<FocusBaseRoute>(startDestination = FocusRoute) {
+        composable<FocusRoute>(
+//            deepLinks = listOf(
+//                navDeepLink {
+//                    /**
+//                     * This destination has a deep link that enables a specific news resource to be
+//                     * opened from a notification (@see SystemTrayNotifier for more). The news resource
+//                     * ID is sent in the URI rather than being modelled in the route type because it's
+//                     * transient data (stored in SavedStateHandle) that is cleared after the user has
+//                     * opened the news resource.
+//                     */
+////                    uriPattern = DEEP_LINK_URI_PATTERN
+//                },
+//            ),
+        ) {
             FocusScreen()
         }
-
-        composable(FocusNavigation.Detail.route) { backStackEntry ->
-//            val id = backStackEntry.arguments?.getString("id")
-//            FocusDetailScreen(id = id ?: "")
-        }
+        topicDestination()
     }
 }
-
-fun NavController.navigateToFocus(navOptions: NavOptions? = null) {
-    navigate(FocusNavigation.Base.route, navOptions)
-}
-
-fun NavController.navigateToFocusDetail(id: String, navOptions: NavOptions? = null) {
-    navigate(FocusNavigation.Detail.createRoute(id), navOptions)
-}
-

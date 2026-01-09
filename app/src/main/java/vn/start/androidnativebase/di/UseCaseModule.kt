@@ -5,7 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import vn.start.domain.repository.DemoRepository
-import vn.start.domain.usecase.GetDemoUseCase
+import vn.start.domain.usecase.GetDemoCachedUseCase
+import vn.start.domain.usecase.GetDemoFreshUseCase
+import vn.start.domain.usecase.RefreshDemoUseCase
 import javax.inject.Singleton
 
 @Module
@@ -13,7 +15,19 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Singleton
     @Provides
-    fun provideGetDemoUseCase(demoRepository: DemoRepository): GetDemoUseCase {
-        return GetDemoUseCase(demoRepository)
+    fun provideGetDemoCachedUseCase(demoRepository: DemoRepository): GetDemoCachedUseCase {
+        return GetDemoCachedUseCase(demoRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetDemoFreshUseCase(demoRepository: DemoRepository): GetDemoFreshUseCase {
+        return GetDemoFreshUseCase(demoRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRefreshDemoUseCase(demoRepository: DemoRepository): RefreshDemoUseCase {
+        return RefreshDemoUseCase(demoRepository)
     }
 }

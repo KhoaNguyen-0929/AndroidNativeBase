@@ -1,4 +1,20 @@
-package vn.start.data.di
+/*
+ * Copyright 2024 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vn.start.androidnativebase.di
 
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -16,44 +32,17 @@ import vn.start.data.remote.APIServices
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
+/**
+ * Network module for providing Retrofit and OkHttp instances.
+ * Moved to app module as workaround for KSP external type resolution limitation.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    @Singleton
-    @Provides
-    fun provideGsonConvertFactory(): GsonConverterFactory = GsonConverterFactory.create(
-        GsonBuilder()
-            .create()
-    )
-
-//    NOTE: Use in case you want to trust all cer.
-//    @Singleton
-//    @Provides
-//    fun provideTrustManager(): X509TrustManager? =
-//        if (BuildConfig.DEBUG) {
-//            object : X509TrustManager {
-//                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
-//                override fun checkClientTrusted(chain: Array<X509Certificate>?, authType: String?) = Unit
-//                override fun checkServerTrusted(chain: Array<X509Certificate>?, authType: String?) = Unit
-//            }
-//        } else null
-//
-//    @Singleton
-//    @Provides
-//    fun provideSSLSocketFactory(trustManager: X509TrustManager): SSLSocketFactory {
-//        val trustAllCerts: Array<TrustManager> = arrayOf(trustManager)
-//        val sslContext = SSLContext.getInstance("SSL")
-//            .apply { init(null, trustAllCerts, SecureRandom()) }
-//        return sslContext.socketFactory
-//    }
 
     @Singleton
     @Provides
-    fun provideAPIClient(
-//        socketFactory: SSLSocketFactory,
-//        trustManager: X509TrustManager
-    ): OkHttpClient {
+    fun provideAPIClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
@@ -80,11 +69,14 @@ object NetworkModule {
     @Provides
     fun provideRetrofitApi(client: OkHttpClient): APIServices {
         val retrofit = Retrofit.Builder()
-            .addConverterFactory(provideGsonConvertFactory())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().create()
+                )
+            )
             .baseUrl(BuildConfig.SERVER_NORMAL_URL)
             .client(client)
             .build()
         return retrofit.create(APIServices::class.java)
     }
 }
-

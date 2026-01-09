@@ -1,6 +1,5 @@
 package vn.start.androidnativebase.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -13,11 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.datetime.TimeZone
-import vn.start.dashboard.navigation.navigateToDashboard
-import vn.start.data.utils.TimeZoneMonitor
+import vn.start.dashboard.navigation.navigateToDashBoard
 import vn.start.focus.navigation.navigateToFocus
 import vn.start.planning.navigation.navigateToPlanning
 
@@ -28,18 +23,16 @@ import vn.start.planning.navigation.navigateToPlanning
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    timeZoneMonitor: TimeZoneMonitor,
 ): AppState {
     return remember(navController, coroutineScope) {
-        AppState(navController, coroutineScope, timeZoneMonitor)
+        AppState(navController, coroutineScope)
     }
 }
 
 @Stable
 class AppState(
     val navController: NavHostController,
-    coroutineScope: CoroutineScope,
-    timeZoneMonitor: TimeZoneMonitor,
+    val coroutineScope: CoroutineScope,
 ) {
     private val previousDestination = mutableStateOf<NavDestination?>(null)
 
@@ -55,24 +48,21 @@ class AppState(
             } ?: previousDestination.value
         }
 
+    val currentBackStackEntry: androidx.navigation.NavBackStackEntry?
+        @Composable get() {
+            return navController.currentBackStackEntryFlow
+                .collectAsState(initial = null).value
+        }
+
     val currentTopLevelDestination: TopLevelDestination?
-        @SuppressLint("RestrictedApi") @Composable get() {
-            return TopLevelDestination.entries.firstOrNull { topLevelDestination ->
-                currentDestination?.hasRoute(
-                    topLevelDestination.route,
-                    arguments = null
-                ) == true
+        @Composable get() {
+            val currentDestinationRoute = currentDestination?.route
+            return TopLevelDestination.entries.firstOrNull { destination ->
+                currentDestinationRoute?.contains(destination.baseRoute.simpleName ?: "") == true
             }
         }
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
-
-    val currentTimeZone = timeZoneMonitor.currentTimeZone
-        .stateIn(
-            coroutineScope,
-            SharingStarted.WhileSubscribed(5_000),
-            TimeZone.currentSystemDefault(),
-        )
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
@@ -86,7 +76,7 @@ class AppState(
         when (topLevelDestination) {
             TopLevelDestination.FOCUS -> navController.navigateToFocus(topLevelNavOptions)
             TopLevelDestination.PLANNING -> navController.navigateToPlanning(topLevelNavOptions)
-            TopLevelDestination.DASHBOARD -> navController.navigateToDashboard(topLevelNavOptions)
+            TopLevelDestination.DASHBOARD -> navController.navigateToDashBoard(topLevelNavOptions)
         }
     }
 

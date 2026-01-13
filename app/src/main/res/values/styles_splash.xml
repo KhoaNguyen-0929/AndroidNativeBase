@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ DeepMinute Splash Screen Theme for Pre-Android 12 (API < 31)
+  ~ Fallback theme using traditional window background approach
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Splash Screen Theme for Pre-Android 12 -->
+    <style name="Theme.DeepMinute.Splash" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Splash screen background using drawable -->
+        <item name="android:windowBackground">@drawable/ic_splash_foreground</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/splash_background</item>
+
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/splash_background</item>
+
+        <!-- Light status bar icons (API 23+) -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Light navigation bar icons (API 27+) -->
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+
+        <!-- Edge-to-edge configuration (API 27+) -->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="20">true</item>
+    </style>
+</resources>

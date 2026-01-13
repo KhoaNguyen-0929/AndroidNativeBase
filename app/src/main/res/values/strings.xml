@@ -1,6 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ DeepMinute App Strings
+  ~ Application name and feature labels
+  -->
 <resources>
-    <string name="app_name">AndroidNativeBase</string>
-    <string name="app_focus">Focus</string>
-    <string name="app_planning">Planning</string>
-    <string name="app_dash_board">DashBoard</string>
+    <!-- ========== App Name ========== -->
+    <string name="app_name">DeepMinute</string>
+
+    <string name="app_home">Home</string>
+    <string name="app_pomodoro">Pomodoro</string>
+    <string name="app_tasks">Tasks</string>
+    <string name="app_stats">Stats</string>
+
+    <!-- ========== Splash Screen ========== -->
+    <string name="splash_screen_title">DeepMinute</string>
+    <string name="splash_screen_tagline">Focus. Create. Achieve.</string>
 </resources>

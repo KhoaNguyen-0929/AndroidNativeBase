@@ -1,31 +1,19 @@
-/*
- * Copyright 2024 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package vn.start.androidnativebase.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 
-/**
- * Navigation scaffold that adapts to different screen sizes.
- * Shows navigation rail on larger screens and navigation bar on smaller screens.
- */
 @Composable
 fun CustomNavigationSuiteScaffold(
     appState: AppState,
@@ -35,19 +23,30 @@ fun CustomNavigationSuiteScaffold(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.surface
+            ) {
                 appState.topLevelDestinations.forEach { destination ->
                     val selected = appState.currentTopLevelDestination == destination
                     NavigationBarItem(
                         icon = {
                             Icon(
                                 imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
-                                contentDescription = destination.name
+                                contentDescription = stringResource(id = destination.iconTextId)
                             )
                         },
-                        label = { Text(destination.name) },
+                        label = {
+                            Text(stringResource(id = destination.iconTextId))
+                        },
                         selected = selected,
-                        onClick = { appState.navigateToTopLevelDestination(destination) }
+                        onClick = { appState.navigateToTopLevelDestination(destination) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Color(0xFF4F6BED),
+                            selectedTextColor = Color(0xFF4F6BED),
+                            indicatorColor = Color(0xFFDDE3FF),
+                            unselectedIconColor = Color(0xFF757680),
+                            unselectedTextColor = Color(0xFF757680)
+                        )
                     )
                 }
             }

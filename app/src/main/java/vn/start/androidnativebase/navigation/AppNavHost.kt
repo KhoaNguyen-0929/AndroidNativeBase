@@ -4,10 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import vn.start.dashboard.navigation.dashboardSection
-import vn.start.focus.navigation.FocusBaseRoute
-import vn.start.focus.navigation.focusSection
-import vn.start.planning.navigation.planningSection
+import vn.start.home.navigation.HomeBaseRoute
+import vn.start.home.navigation.homeSection
+import vn.start.pomodoro.navigation.pomodoroSection
+import vn.start.stats.navigation.statsSection
+import vn.start.tasks.navigation.tasksSection
 
 @Composable
 fun AppNavHost(
@@ -17,29 +18,12 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = FocusBaseRoute,
+        startDestination = HomeBaseRoute,
         modifier = modifier
     ) {
-        focusSection(
-            onTopicClick = { /* Handle topic click */ },
-            topicDestination = {
-                // Add topic destination here if needed
-            }
-        )
-
-        dashboardSection(
-            navController = navController,
-            onTopicClick = { /* Handle topic click */ },
-            topicDestination = {
-                // Add topic destination here if needed
-            }
-        )
-
-        planningSection(
-            onTopicClick = { /* Handle topic click */ },
-            topicDestination = {
-                // Add topic destination here if needed
-            }
-        )
+        homeSection()
+        pomodoroSection()
+        tasksSection()
+        statsSection()
     }
 }

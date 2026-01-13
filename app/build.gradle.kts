@@ -67,17 +67,8 @@ android {
         compose = true
     }
 
-    // Disable Hilt aggregation task due to JavaPoet API issues with Kotlin 2.0.21
-    // This is an optional optimization for build performance
-    hilt {
-        enableAggregatingTask = false
-    }
-}
-
-// Add KSP options for proper Hilt processing
-ksp {
-    arg("room.generateKotlin", "true")
-    arg("correctErrorTypes", "true")
+    // Enable Hilt aggregating task for better build performance
+    // Previously disabled due to JavaPoet issues, now resolved
 }
 
 dependencies {
@@ -85,6 +76,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // SplashScreen API for Android 12+
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -104,18 +99,12 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    // Network dependencies for app module (moved from data as KSP workaround)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-    implementation(libs.gson)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
-
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":features:focus"))
-    implementation(project(":features:planning"))
-    implementation(project(":features:dashboard"))
+    implementation(project(":features:home"))
+    implementation(project(":features:pomodoro"))
+    implementation(project(":features:tasks"))
+    implementation(project(":features:stats"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
 }

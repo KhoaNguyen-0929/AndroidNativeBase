@@ -12,13 +12,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
-import vn.start.dashboard.navigation.navigateToDashboard
-import vn.start.focus.navigation.navigateToFocus
-import vn.start.planning.navigation.navigateToPlanning
+import vn.start.home.navigation.navigateToHome
+import vn.start.pomodoro.navigation.navigateToPomodoro
+import vn.start.stats.navigation.navigateToStats
+import vn.start.tasks.navigation.navigateToTasks
 
-/**
- * Remember and provide [AppState] scoped to the composition.
- */
 @Composable
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
@@ -56,9 +54,9 @@ class AppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() {
-            val currentDestinationRoute = currentDestination?.route
+            val currentDestinationRoute = currentDestination?.route ?: return null
             return TopLevelDestination.entries.firstOrNull { destination ->
-                currentDestinationRoute?.contains(destination.baseRoute) == true
+                currentDestinationRoute.contains(destination.route) || currentDestinationRoute.contains(destination.baseRoute)
             }
         }
 
@@ -74,9 +72,10 @@ class AppState(
         }
 
         when (topLevelDestination) {
-            TopLevelDestination.FOCUS -> navController.navigateToFocus(topLevelNavOptions)
-            TopLevelDestination.PLANNING -> navController.navigateToPlanning(topLevelNavOptions)
-            TopLevelDestination.DASHBOARD -> navController.navigateToDashboard(topLevelNavOptions)
+            TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
+            TopLevelDestination.POMODORO -> navController.navigateToPomodoro(topLevelNavOptions)
+            TopLevelDestination.TASKS -> navController.navigateToTasks(topLevelNavOptions)
+            TopLevelDestination.STATS -> navController.navigateToStats(topLevelNavOptions)
         }
     }
 

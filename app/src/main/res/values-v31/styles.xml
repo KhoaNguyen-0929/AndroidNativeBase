@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ DeepMinute Splash Screen Theme for Android 12+ (API 31+)
+  ~ Uses Android Splash Screen API for smooth entry animation
+  -->
+<resources>
+    <!-- Splash Screen Theme for Android 12+ -->
+    <style name="Theme.DeepMinute.Splash" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Splash screen background color -->
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+
+        <!-- Splash screen animated icon (monochrome for Android 12+) -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_monochrome</item>
+
+        <!-- Icon background color (optional, for transparent icons) -->
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_background</item>
+
+        <!-- Status bar configuration for splash -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Navigation bar configuration for splash -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Edge-to-edge configuration -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+</resources>

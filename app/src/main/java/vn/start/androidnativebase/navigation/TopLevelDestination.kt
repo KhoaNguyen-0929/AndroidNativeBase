@@ -3,25 +3,12 @@ package vn.start.androidnativebase.navigation
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import vn.start.androidnativebase.R
-import vn.start.dashboard.navigation.DashboardNavigation
 import vn.start.designsystem.icon.AppIcon
-import vn.start.focus.navigation.FocusNavigation
-import vn.start.planning.navigation.PlanningNavigation
+import vn.start.home.navigation.HomeNavigation
+import vn.start.pomodoro.navigation.PomodoroNavigation
+import vn.start.stats.navigation.StatsNavigation
+import vn.start.tasks.navigation.TasksNavigation
 
-/**
- * Type for the top level destinations in the application. Contains metadata about the destination
- * that is used in the top app bar and common navigation UI.
- *
- * @param selectedIcon The icon to be displayed in the navigation UI when this destination is
- * selected.
- * @param unselectedIcon The icon to be displayed in the navigation UI when this destination is
- * not selected.
- * @param iconTextId Text that to be displayed in the navigation UI.
- * @param titleTextId Text that is displayed on the top app bar.
- * @param route The route to use when navigating to this destination.
- * @param baseRoute The highest ancestor of this destination. Defaults to [route], meaning that
- * there is a single destination in that section of the app (no nested destinations).
- */
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
@@ -30,28 +17,36 @@ enum class TopLevelDestination(
     val route: String,
     val baseRoute: String = route,
 ) {
-    FOCUS(
-        selectedIcon = AppIcon.Person,
-        unselectedIcon = AppIcon.Settings,
-        route = FocusNavigation.Main.route.toString(),
-        iconTextId = R.string.app_focus,
-        titleTextId= R.string.app_focus,
-        baseRoute = FocusNavigation.Base.route.toString(),
+    HOME(
+        selectedIcon = AppIcon.Home,
+        unselectedIcon = AppIcon.HomeOutline,
+        route = HomeNavigation.Main.route.toString(),
+        iconTextId = R.string.app_home,
+        titleTextId = R.string.app_home,
+        baseRoute = HomeNavigation.Base.route.toString(),
     ),
-    PLANNING(
-        selectedIcon = AppIcon.Person,
-        unselectedIcon = AppIcon.Settings,
-        route = PlanningNavigation.Main.route.toString(),
-        iconTextId = R.string.app_planning,
-        titleTextId= R.string.app_planning,
-        baseRoute = PlanningNavigation.Base.route.toString(),
+    POMODORO(
+        selectedIcon = AppIcon.Timer,
+        unselectedIcon = AppIcon.TimerOutline,
+        route = PomodoroNavigation.Main.route.toString(),
+        iconTextId = R.string.app_pomodoro,
+        titleTextId = R.string.app_pomodoro,
+        baseRoute = PomodoroNavigation.Base.route.toString(),
     ),
-    DASHBOARD(
-        selectedIcon = AppIcon.Person,
-        unselectedIcon = AppIcon.Settings,
-        route = DashboardNavigation.Main.route.toString(),
-        iconTextId = R.string.app_dash_board,
-        titleTextId= R.string.app_dash_board,
-        baseRoute = DashboardNavigation.Base.route.toString(),
+    TASKS(
+        selectedIcon = AppIcon.Check,
+        unselectedIcon = AppIcon.CheckOutline,
+        route = TasksNavigation.Main.route.toString(),
+        iconTextId = R.string.app_tasks,
+        titleTextId = R.string.app_tasks,
+        baseRoute = TasksNavigation.Base.route.toString(),
+    ),
+    STATS(
+        selectedIcon = AppIcon.BarChart,
+        unselectedIcon = AppIcon.BarChartOutline,
+        route = StatsNavigation.Main.route.toString(),
+        iconTextId = R.string.app_stats,
+        titleTextId = R.string.app_stats,
+        baseRoute = StatsNavigation.Base.route.toString(),
     ),
 }

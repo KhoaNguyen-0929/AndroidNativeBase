@@ -16,17 +16,20 @@ android {
     productFlavors {
         create("dev") {
             dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+            // Development server URL - update with your actual dev API endpoint
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://dev-api.example.com/\"")
         }
 
         create("staging") {
             dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+            // Staging server URL - update with your actual staging API endpoint
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://staging-api.example.com/\"")
         }
 
         create("prod") {
             dimension = "env"
-            buildConfigField("String", "SERVER_NORMAL_URL", "\"URL\"")
+            // Production server URL - update with your actual production API endpoint
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://api.example.com/\"")
         }
     }
 }

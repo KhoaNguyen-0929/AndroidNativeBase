@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ DeepMinute Splash Screen Icon
+  ~
+  ~ Centered logo for splash screen display
+  ~ ViewBox: 288x288 (Android splash screen standard)
+  ~ Icon content: Centered in 192x192 area for proper display
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="288"
+    android:viewportHeight="288">
+
+    <!-- Main clock circle - centered in viewport -->
+    <!-- Center at 144,144 with radius 80 -->
+    <path
+        android:fillColor="#2E3A59"
+        android:pathData="M144,64 m-80,0 a80,80 0,0,1 160,0 a80,80 0,0,1 -160,0"/>
+
+    <!-- Clock marks - 12 marks around the circle -->
+    <!-- 12 o'clock position (top) - HIGHLIGHTED with accent -->
+    <path
+        android:fillColor="#FF8A65"
+        android:pathData="M144,76 L148,86 L140,86 Z"/>
+
+    <!-- 1 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M184,100 L180,110 L174,106 Z"/>
+
+    <!-- 2 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M212,132 L204,140 L198,134 Z"/>
+
+    <!-- 3 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M224,144 L206,144 L206,146 L224,146 Z"/>
+
+    <!-- 4 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M212,156 L204,148 L198,154 Z"/>
+
+    <!-- 5 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M184,188 L180,178 L174,182 Z"/>
+
+    <!-- 6 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M146,212 L142,212 L142,206 L146,206 Z"/>
+
+    <!-- 7 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M116,188 L112,182 L106,178 Z"/>
+
+    <!-- 8 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M88,156 L76,154 L70,148 Z"/>
+
+    <!-- 9 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M64,144 L82,144 L82,146 L64,146 Z"/>
+
+    <!-- 10 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M76,132 L70,134 L64,140 Z"/>
+
+    <!-- 11 o'clock -->
+    <path
+        android:fillColor="#5A6B8A"
+        android:pathData="M104,100 L100,106 L94,110 Z"/>
+
+    <!-- Clock hands - showing "one minute past" -->
+    <!-- Hour hand (shorter) - pointing to 12 -->
+    <path
+        android:fillColor="#E8EAF0"
+        android:pathData="M144,144 L144,106 L146,106 L146,144 Z"/>
+
+    <!-- Minute hand (longer) - pointing to HIGHLIGHTED minute -->
+    <path
+        android:fillColor="#FF8A65"
+        android:pathData="M144,144 L144,76 L146,76 L146,144 Z"/>
+
+    <!-- Center outer ring -->
+    <path
+        android:fillColor="#2E3A59"
+        android:pathData="M144,138 m-6,0 a6,6 0,1,1 12,0 a6,6 0,1,1 -12,0"/>
+
+    <!-- Center focus dot -->
+    <circle
+        android:fillColor="#FF8A65"
+        android:pathData="M144,144 m-3,0 a3,3 0,1,1 6,0 a3,3 0,1,1 -6,0"/>
+
+</vector>

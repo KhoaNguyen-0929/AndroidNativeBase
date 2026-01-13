@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ DeepMinute App Icon - Monochrome Version (Android 12+ Themed Icon)
+  ~
+  ~ Single-color version that can be tinted by the system
+  ~ Uses pure black/white for proper theming support
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Inner circle - time container -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,16 m-38,0 a38,38 0,0,1 76,0 a38,38 0,0,1 -76,0"/>
+
+    <!-- Clock marks - 12 marks around the circle -->
+    <!-- All marks in monochrome for themed icon support -->
+
+    <!-- 12 o'clock position (top) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,24 L58,30 L50,30 Z"/>
+
+    <!-- 1 o'clock (30 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M73,32 L71,40 L67,37 Z"/>
+
+    <!-- 2 o'clock (60 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M84,48 L79,54 L75,50 Z"/>
+
+    <!-- 3 o'clock (90 degrees - right) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M80,54 L72,54 L72,56 L80,56 Z"/>
+
+    <!-- 4 o'clock (120 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M84,60 L79,50 L75,54 Z"/>
+
+    <!-- 5 o'clock (150 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M73,76 L71,68 L67,71 Z"/>
+
+    <!-- 6 o'clock (180 degrees - bottom) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M56,80 L52,80 L52,76 L56,76 Z"/>
+
+    <!-- 7 o'clock (210 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M41,76 L37,71 L35,68 Z"/>
+
+    <!-- 8 o'clock (240 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M29,60 L25,54 L21,50 Z"/>
+
+    <!-- 9 o'clock (270 degrees - left) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M24,54 L32,54 L32,56 L24,56 Z"/>
+
+    <!-- 10 o'clock (300 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M29,48 L21,50 L25,54 Z"/>
+
+    <!-- 11 o'clock (330 degrees) -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M41,32 L37,37 L35,40 Z"/>
+
+    <!-- Clock hands - showing "one minute past" -->
+    <!-- Hour hand (shorter) - pointing to 12 -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,54 L54,38 L56,38 L56,54 Z"/>
+
+    <!-- Minute hand (longer) - pointing to the highlighted minute -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,54 L54,26 L56,26 L56,54 Z"/>
+
+    <!-- Center dot -->
+    <circle
+        android:fillColor="#000000"
+        android:pathData="M54,52 m-2,0 a2,2 0,1,1 4,0 a2,2 0,1,1 -4,0"/>
+
+    <!-- Small accent dot at center - representing focus point -->
+    <circle
+        android:fillColor="#000000"
+        android:pathData="M54,54 m-1.5,0 a1.5,1.5 0,1,1 3,0 a1.5,1.5 0,1,1 -3,0"/>
+
+</vector>

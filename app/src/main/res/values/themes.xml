@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<!--
+  ~ DeepMinute App Themes
+  ~ Main application theme that MainActivity will switch to after splash
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ========== DeepMinute Themes ========== -->
 
+    <!-- Base theme that MainActivity will use after splash screen -->
+    <style name="Theme.DeepMinute" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Primary colors -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+
+        <!-- Background colors -->
+        <item name="android:windowBackground">@color/background</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+
+        <!-- Edge-to-edge -->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="20">true</item>
+    </style>
+
+    <!-- Starting theme (used by AndroidManifest, will be overridden by splash) -->
+    <style name="Theme.DeepMinute.Starting" parent="Theme.DeepMinute.Splash" />
+
+    <!-- ========== Legacy Theme (for compatibility) ========== -->
     <style name="Theme.AndroidNativeBase" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

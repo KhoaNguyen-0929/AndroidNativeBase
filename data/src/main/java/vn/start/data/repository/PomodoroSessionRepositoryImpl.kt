@@ -15,6 +15,18 @@ class PomodoroSessionRepositoryImpl @Inject constructor(
     private val pomodoroSessionMapper: PomodoroSessionMapper
 ) : PomodoroSessionRepository {
 
+    override suspend fun getSessionById(id: Int): PomodoroSessionModel? {
+        return pomodoroSessionDao.getSessionById(id)?.let {
+            pomodoroSessionMapper.fromEntity(it)
+        }
+    }
+
+    override fun getAllSessions(): Flow<List<PomodoroSessionModel>> {
+        return pomodoroSessionDao.getAllSessions().map { list ->
+            list.map { pomodoroSessionMapper.fromEntity(it) }
+        }
+    }
+
     override fun getSessionsForTask(taskId: Int): Flow<List<PomodoroSessionModel>> {
         return pomodoroSessionDao.getSessionsForTask(taskId).map { list ->
             list.map { pomodoroSessionMapper.fromEntity(it) }
@@ -23,6 +35,10 @@ class PomodoroSessionRepositoryImpl @Inject constructor(
 
     override suspend fun insertSession(session: PomodoroSessionModel) {
         return pomodoroSessionDao.insertSession(pomodoroSessionMapper.toEntity(session))
+    }
+
+    override suspend fun updateSession(session: PomodoroSessionModel) {
+        return pomodoroSessionDao.updateSession(pomodoroSessionMapper.toEntity(session))
     }
 
     override suspend fun deleteSession(session: PomodoroSessionModel) {

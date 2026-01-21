@@ -60,6 +60,17 @@ class AppState(
             }
         }
 
+    /**
+     * Whether the bottom bar should be shown for the current destination.
+     * This is the single source of truth for bottom bar visibility.
+     */
+    val shouldShowBottomBar: Boolean
+        @Composable get() {
+            val topLevelDestination = currentTopLevelDestination
+            // Default to showing bottom bar for unknown destinations
+            return topLevelDestination?.showBottomBar ?: true
+        }
+
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {

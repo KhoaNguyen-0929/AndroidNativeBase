@@ -21,11 +21,19 @@ data class PomodoroSession(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
-    val taskId: Int,
+    val taskId: Int?,
 
-    val duration: Int,
+    val sessionType: String,
 
-    val isCompleted: Boolean,
+    val durationSeconds: Int,
 
-    val createdAt: Long
+    val status: String,
+
+    val remainingSeconds: Int,
+
+    val createdAt: Long,
+
+    val startedAt: Long?,
+
+    val completedAt: Long?
 )

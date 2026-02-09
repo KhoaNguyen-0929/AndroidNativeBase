@@ -40,6 +40,12 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
 
+    // DataStore for settings
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    
+    // Lifecycle Compose for collectAsStateWithLifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
     implementation(project(":domain"))
     implementation(project(":core:common"))
 }
